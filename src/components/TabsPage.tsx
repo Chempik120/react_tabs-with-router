@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Tab as TabType } from '../types/Tab';
-import { Tabs, TabList, Tab } from 'react-tabs';
+import { Tabs, TabList, TabPanel, Tab } from 'react-tabs';
 import { Link, useParams } from 'react-router-dom';
 
 interface Props {
@@ -15,7 +15,6 @@ export const TabsPage = ({ tabs }: Props) => {
 
   return (
     <Tabs selectedIndex={tabIndex !== -1 ? tabIndex : -1} onSelect={() => {}}>
-      <>
         <h1 className="title">Tabs page</h1>
         <div className="tabs is-boxed">
           <TabList>
@@ -37,14 +36,22 @@ export const TabsPage = ({ tabs }: Props) => {
           </TabList>
         </div>
 
+        {!activeTab && (
         <div data-cy="TabContent" className="block">
-          {activeTab ? (
-            activeTab.content
-          ) : (
-            <div className="block">Please select a tab</div>
-          )}
+          Please select a tab
         </div>
-      </>
+      )}
+
+      {tabs.map(tab => (
+        <TabPanel key={tab.id}>
+          {activeTab?.id === tab.id && (
+            <div data-cy="TabContent" className="block">
+              {tab.content}
+            </div>
+          )}
+          
+        </TabPanel>
+      ))}
     </Tabs>
   );
 };
