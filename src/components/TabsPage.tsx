@@ -15,28 +15,28 @@ export const TabsPage = ({ tabs }: Props) => {
 
   return (
     <Tabs selectedIndex={tabIndex !== -1 ? tabIndex : -1} onSelect={() => {}}>
-        <h1 className="title">Tabs page</h1>
-        <div className="tabs is-boxed">
-          <TabList>
-            {tabs.map(tab => {
-              const isActive = tab.id === activeTab?.id;
+      <h1 className="title">Tabs page</h1>
+      <div className="tabs is-boxed">
+        <TabList>
+          {tabs.map(tab => {
+            const isActive = tab.id === activeTab?.id;
 
-              return (
-                <Tab
-                  key={tab.id}
-                  data-cy="Tab"
-                  className={classNames({ 'is-active': isActive })}
-                >
-                  <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
-                    {tab.title}
-                  </Link>
-                </Tab>
-              );
-            })}
-          </TabList>
-        </div>
+            return (
+              <Tab
+                key={tab.id}
+                data-cy="Tab"
+                className={classNames({ 'is-active': isActive })}
+              >
+                <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
+                  {tab.title}
+                </Link>
+              </Tab>
+            );
+          })}
+        </TabList>
+      </div>
 
-        {!activeTab && (
+      {!activeTab && (
         <div data-cy="TabContent" className="block">
           Please select a tab
         </div>
@@ -49,7 +49,6 @@ export const TabsPage = ({ tabs }: Props) => {
               {tab.content}
             </div>
           )}
-          
         </TabPanel>
       ))}
     </Tabs>
