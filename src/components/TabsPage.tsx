@@ -1,46 +1,50 @@
 import classNames from 'classnames';
-import { Tab } from '../types/Tab';
+import { Tab as TabType } from '../types/Tab';
+import { Tabs, TabList, Tab } from 'react-tabs';
 import { Link, useParams } from 'react-router-dom';
 
 interface Props {
-  tabs: Tab[];
+  tabs: TabType[];
 }
 
-export const Tabs = ({ tabs }: Props) => {
+export const TabsPage = ({ tabs }: Props) => {
   const { tabId } = useParams();
 
   const activeTab = tabs.find(tab => tab.id === tabId);
+  const tabIndex = tabs.findIndex(tab => tab.id === tabId);
 
   return (
-    <>
-      <h1 className="title">Tabs page</h1>
-      <div className="tabs is-boxed">
-        <ul>
-          {tabs.map(tab => {
-            const isActive = tab.id === activeTab?.id;
+    <Tabs selectedIndex={tabIndex !== -1 ? tabIndex : -1} onSelect={() => {}}>
+      <>
+        <h1 className="title">Tabs page</h1>
+        <div className="tabs is-boxed">
+          <TabList>
+            {tabs.map(tab => {
+              const isActive = tab.id === activeTab?.id;
 
-            return (
-              <li
-                key={tab.id}
-                data-cy="Tab"
-                className={classNames({ 'is-active': isActive })}
-              >
-                <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
-                  {tab.title}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+              return (
+                <Tab
+                  key={tab.id}
+                  data-cy="Tab"
+                  className={classNames({ 'is-active': isActive })}
+                >
+                  <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
+                    {tab.title}
+                  </Link>
+                </Tab>
+              );
+            })}
+          </TabList>
+        </div>
 
-      <div data-cy="TabContent" className="block">
-        {activeTab ? (
-          activeTab.content
-        ) : (
-          <div className="block">Please select a tab</div>
-        )}
-      </div>
-    </>
+        <div data-cy="TabContent" className="block">
+          {activeTab ? (
+            activeTab.content
+          ) : (
+            <div className="block">Please select a tab</div>
+          )}
+        </div>
+      </>
+    </Tabs>
   );
 };

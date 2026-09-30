@@ -2,7 +2,7 @@ import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Tabs } from './components/TabsPage';
+import { TabsPage } from './components/TabsPage';
 import { HomePage } from './components/HomePage';
 import { Navigation } from './components/Navigation';
 
@@ -15,7 +15,7 @@ const tabs = [
 export const App = () => {
   return (
     <>
-      <html className="has-navbar-fixed-top">
+      <div className="has-navbar-fixed-top">
         <Navigation />
         <div className="section">
           <div className="container">
@@ -24,8 +24,8 @@ export const App = () => {
               <Route path="home" element={<Navigate to="/" replace />} />
 
               <Route path="tabs">
-                <Route index element={<Tabs tabs={tabs} />} />
-                <Route path=":tabId" element={<Tabs tabs={tabs} />} />
+                <Route index element={<TabsPage tabs={tabs} />} />
+                <Route path=":tabId" element={<TabsPage tabs={tabs} />} />
               </Route>
 
               <Route
@@ -35,7 +35,7 @@ export const App = () => {
             </Routes>
           </div>
         </div>
-      </html>
+      </div>
     </>
   );
 };
